@@ -52,8 +52,9 @@ end
 function spawn!(wfn::Vector{Complex{Float64}})
     I = div(res, 3)
     for i = 0:λ
-        wfn[i + I] = sin(π * i / λ) * exp(im * p^2 * π * i / 4 / λ)
-        # wfn[i + I] = (A/(2sqrt(π*k))) * exp(-(i - div(λ, 2))^2/(4k)) * exp(im * p^2 * π * i)
+        wfn[i + I] = sinpkt(i)
+        # wfn[i + I] = exppkt(i)
+            # sin(π * i / λ) * exp(im * p^2 * π * i / 4 / λ)
     end
 end
 
@@ -66,6 +67,10 @@ function normalize!(wfn::Vector{Complex{Float64}})
     wfn
 end
 
+sinpkt(x) = sin(π * x / λ) * exp(-im * p^2 * π * x / λ)
+exppkt(x) = A * exp(-((x - λ/2)/σ)^2) / (σ * sqrt(2π))
+
+
 const res  = 2^9::Int64
 const len  = 20.::Float64
 const mid  = div(res, 2)
@@ -76,16 +81,17 @@ const xspc = Vector{Float64}((-mid : mid - 1) * dx)
 const kspc = Vector{Float64}(vcat(0 : mid - 1, -mid:-1) * dk)
 const tmax = parse(Int64, ARGS[1])
 
-const A = 1.
 const k = 1.5
-const p = 1.0::Float64
-const λ = div(res, 8)
+const p = 3.0::Float64
+const λ = div(res, 6)
+const σ = λ/6
+const A = 20
 
 const enrg = true
 const imtm = false
 
 function main()
-    V(x) = 15x^2
+    V(x) = 20x^2
     # V(x) = begin x <= (mid + 2)*dx && x >= (mid - 2)*dx ? 9999999. : 0.0000001 end
     opr::Operators = oprinit(V)
     wfn::Vector{Complex{Float64}} = zeros(res)
