@@ -96,10 +96,10 @@ const periodic = true
 function main()
     println("calculating hamiltonian\n")
 
-    ∇² = laplacian()
-    V  = potential()
+    Δ = laplacian()
+    V = potential()
 
-    H = -λ * ∇² + V
+    H = -λ * Δ + V
 
     println("solving Hψ = Eψ\n")
 
@@ -111,11 +111,11 @@ function main()
 
     println("Emin = $Emin\n")
 
-    enrdat = open("energy$(periodic ? "p" : "").dat", "w")
+    # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat", "w")
 
-    for i in eachindex(E) println(enrdat, i, " ", E[i]) end
+    # for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
-    for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
+    # for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
 
     println("finished in:")
 end
