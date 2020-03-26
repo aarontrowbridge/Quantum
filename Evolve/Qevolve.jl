@@ -71,7 +71,7 @@ sinpkt(x) = sin(π * x / λ) * exp(-im * p^2 * π * x / λ)
 exppkt(x) = A * exp(-((x - λ/2)/σ)^2) / (σ * sqrt(2π))
 
 
-const res  = 2^9::Int64
+const res  = 2^8::Int64
 const len  = 20.::Float64
 const mid  = div(res, 2)
 const dx   = len / res
@@ -79,7 +79,6 @@ const dk   = 2π / len
 const dt   = 1e-3::Float64
 const xspc = Vector{Float64}((-mid : mid - 1) * dx)
 const kspc = Vector{Float64}(vcat(0 : mid - 1, -mid:-1) * dk)
-const tmax = parse(Int64, ARGS[1])
 
 const k = 1.5
 const p = 3.0::Float64
@@ -96,7 +95,7 @@ function main()
     opr::Operators = oprinit(V)
     wfn::Vector{Complex{Float64}} = zeros(res)
     spawn!(wfn)
-    for t = 0:tmax
+    while true
         anim(wfn, opr)
         split!(wfn, opr)
     end
