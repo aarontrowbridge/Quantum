@@ -69,7 +69,6 @@ end
 
 function anim(ψ::Vector, E::Vector{Float64}, j::Int)
     qs = lattice(ψ)
-    p = periodic ? "p" : ""
     evec = open("evec$(j)$(p)_res$(res).dat", "w")
     for (x, y, z, A) in qs
         println(evec, "c3 $x $y $z $(A*scaler)")
@@ -92,6 +91,7 @@ const λ = 1 / (2dq^2)
 const ψn = parse(Int64, ARGS[1])
 
 const periodic = true
+const p = periodic ? "p" : ""
 
 function main()
     println("calculating hamiltonian\n")
@@ -111,11 +111,11 @@ function main()
 
     println("Emin = $Emin\n")
 
-    # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat", "w")
+    enrdat = open("/eigen_data/energy$(p).dat", "w")
 
-    # for i in eachindex(E) println(enrdat, i, " ", E[i]) end
+    for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
-    # for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
+    for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
 
     println("finished in:")
 end
