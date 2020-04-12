@@ -10,15 +10,15 @@ S(xi, xf) = 0.5 * norm(xf - xi)^2
 
 K(xi, xf) = exp(im * S(xi, xf))
 
-source(ds) = (div(ds[1] + 1, 2), 1)
+source(dims) = (div(dims[1] + 1, 2), 1)
 
 const dims = (11, 20)
 
-function propagate(ds::Tuple{Int64, Int64})
+function propagate(dims::Tuple{Int64, Int64})
 
-    space = zeros(Complex, ds)
+    space = zeros(Complex, dims)
 
-    (xsrc, ysrc) = source(ds)
+    (xsrc, ysrc) = source(dims)
 
     space[xsrc, ysrc] = 1.
 

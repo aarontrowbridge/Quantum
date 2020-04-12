@@ -5,36 +5,36 @@ using LinearAlgebra, SparseArrays, Arpack
 coulumb(x, y, z) = -1 / (4π * hypot(x, y, z))
 
 function laplacian()
-    I = [1:dim;
-         2:dim; [1];
-         res+1:dim; 1:res;
-         res^2+1:dim; 1:res^2;
-         1:dim;
-         1:dim;
-         1:dim]
+    I = [1:d;
+         2:d; [1];
+         res+1:d; 1:res;
+         res^2+1:d; 1:res^2;
+         1:d;
+         1:d;
+         1:d]
 
-    J = [1:dim;
-         1:dim;
-         1:dim;
-         1:dim;
-         2:dim; [1];
-         res+1:dim; 1:res;
-         res^2+1:dim; 1:res^2]
+    J = [1:d;
+         1:d;
+         1:d;
+         1:d;
+         2:d; [1];
+         res+1:d; 1:res;
+         res^2+1:d; 1:res^2]
 
-    V = [[-6 for i in 1:dim];
-         [1 for i in 1:(2 * 3 * dim)]]
+    V = [[-6 for i in 1:d];
+         [1 for i in 1:(2 * 3 * d)]]
 
     if !periodic
-        V[2dim] = 0
-        V[5dim] = 0
+        V[2d] = 0
+        V[5d] = 0
     end
 
     sparse(I, J, V)
 end
 
 function potential()
-    I = [1:dim...]
-    J = [1:dim...]
+    I = [1:d...]
+    J = [1:d...]
     V::Vector{Float64} = []
     for k = 1:res
         for j = 1:res
@@ -79,22 +79,25 @@ function anim(ψ::Vector, E::Vector{Float64}, j::Int)
     println(evec, "F")
 end
 
+
+
 const res = 80
-const dim = res^3
+const d = res^3
 const O = (res + 1)/2
+
 const qmax = 250
 const dq = 2 * qmax / res
+const λ = 1 / (2dq^2)
 
 const thresh = 2.0e-4
 const scaler = 5.5e3
 
-const λ = 1 / (2dq^2)
-const ψn = parse(Int64, ARGS[1])
-
 const periodic = true
 
+const ψn = parse(Int64, ARGS[1])
+
 function main()
-    println("calculating hamiltonian\n")
+    println("\ncalculating hamiltonian\n")
 
     Δ = laplacian()
     V = potential()
@@ -110,6 +113,8 @@ function main()
     Emin = minimum(E)
 
     println("Emin = $Emin\n")
+
+    println("writing data")
 
     # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat", "w")
 
