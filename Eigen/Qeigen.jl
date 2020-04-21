@@ -1,6 +1,6 @@
 # hydrogen eigen solver
 
-using LinearAlgebra, SparseArrays, Arpack
+using LinearAlgebra, CuArrays.CUSPARSE
 
 coulumb(x, y, z) = -1 / (4π * hypot(x, y, z))
 
