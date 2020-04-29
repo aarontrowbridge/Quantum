@@ -113,7 +113,7 @@ function main()
 
     enrdat = open("/eigen_data/energy$(p).dat", "w")
 
-    for i in eachindex(E) println(enrdat, i, " ", E[i]) end
+    # for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
     for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
 
