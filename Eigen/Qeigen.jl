@@ -69,7 +69,6 @@ end
 
 function anim(ψ::Vector, E::Vector{Float64}, j::Int)
     qs = lattice(ψ)
-    p = periodic ? "p" : ""
     evec = open("evec$(j)$(p)_res$(res).dat", "w")
     for (x, y, z, A) in qs
         println(evec, "c3 $x $y $z $(A*scaler)")
@@ -93,6 +92,7 @@ const thresh = 2.0e-4
 const scaler = 5.5e3
 
 const periodic = true
+const p = periodic ? "p" : ""
 
 const ψn = parse(Int64, ARGS[1])
 
