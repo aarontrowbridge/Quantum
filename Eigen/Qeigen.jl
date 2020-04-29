@@ -79,7 +79,6 @@ function anim(ψ::Vector, E::Vector{Float64}, j::Int)
 end
 
 
-
 const res = 50
 const d = res^3
 const O = (res + 1)/2
@@ -116,7 +115,7 @@ function main()
 
     println("writing data")
 
-    # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat", "w")
+    # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat")
 
     for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
