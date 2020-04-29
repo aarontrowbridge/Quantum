@@ -1,6 +1,6 @@
 # hydrogen eigen solver
 
-using LinearAlgebra, CuArrays.CUSPARSE
+using SparseArrays, Arpack
 
 coulumb(x, y, z) = -1 / (4π * hypot(x, y, z))
 
@@ -81,7 +81,7 @@ end
 
 
 
-const res = 80
+const res = 50
 const d = res^3
 const O = (res + 1)/2
 
@@ -118,9 +118,9 @@ function main()
 
     # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat", "w")
 
-    # for i in eachindex(E) println(enrdat, i, " ", E[i]) end
+    for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
-    # for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
+    for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
 
     println("finished in:")
 end
