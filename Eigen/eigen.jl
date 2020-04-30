@@ -1,6 +1,6 @@
 # hydrogen eigen solver
 
-using SparseArrays, Arpack
+using SparseArrays, ArnoldiMethod
 
 coulumb(x, y, z) = -1 / (4π * hypot(x, y, z))
 
@@ -22,7 +22,7 @@ function laplacian()
          res^2+1:d; 1:res^2]
 
     V = [[-6 for i in 1:d];
-         [1 for i in 1:(2 * 3 * d)]]
+         [1 for i in 1:6d]]
 
     if !periodic
         V[2d] = 0
@@ -69,7 +69,7 @@ end
 
 function anim(ψ::Vector, E::Vector{Float64}, j::Int)
     qs = lattice(ψ)
-    evec = open("evec$(j)$(p)_res$(res).dat", "w")
+    evec = open("data/evec$(j)$(p)_res$(res).dat", "w")
     for (x, y, z, A) in qs
         println(evec, "c3 $x $y $z $(A*scaler)")
     end
@@ -79,16 +79,16 @@ function anim(ψ::Vector, E::Vector{Float64}, j::Int)
 end
 
 
-const res = 50
+const res = 100
 const d = res^3
 const O = (res + 1)/2
 
-const qmax = 250
+const qmax = 1e3
 const dq = 2 * qmax / res
 const λ = 1 / (2dq^2)
 
-const thresh = 2.0e-4
-const scaler = 5.5e3
+const thresh = 5e-5
+const scaler = 1e3
 
 const periodic = true
 const p = periodic ? "p" : ""
@@ -105,7 +105,9 @@ function main()
 
     println("solving Hψ = Eψ\n")
 
-    E, ψ = eigs(H, nev=ψn, which=:SM)
+    decomp, history = partialschur(H, nev=ψn, tol=1e-6, which=SR())
+
+    E, ψ = partialeigen(decomp)
 
     println("solved!\n")
 
@@ -113,11 +115,11 @@ function main()
 
     println("Emin = $Emin\n")
 
-    println("writing data")
+    println("writing data\n")
 
     # enrdat = open("$(pwd())/eigen_data/energy$(periodic ? "p" : "").dat")
 
-    for i in eachindex(E) println(enrdat, i, " ", E[i]) end
+    # for i in eachindex(E) println(enrdat, i, " ", E[i]) end
 
     for j in 1:size(ψ, 2) anim(ψ[:,j], E, j) end
 
@@ -125,3 +127,5 @@ function main()
 end
 
 @time main()
+
+println()

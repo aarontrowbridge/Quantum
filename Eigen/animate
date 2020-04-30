@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+data=$1
+
+zsh print.sh $data | anim
