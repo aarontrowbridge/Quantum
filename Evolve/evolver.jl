@@ -91,8 +91,7 @@ const imtm = false
 
 function main()
     V(x) = 20x^2
-    # V(x) = begin x <= (mid + 2)*dx && x >= (mid - 2)*dx ? 9999999. : 0.0000001 end
-    opr::Operators = oprinit(V)
+    # V(x) = begin x <= (mid + 2)
     wfn::Vector{Complex{Float64}} = zeros(res)
     spawn!(wfn)
     while true
