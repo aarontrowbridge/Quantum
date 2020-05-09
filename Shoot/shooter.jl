@@ -1,21 +1,8 @@
 # shooting method
-using Printf
+using Printf, LinearAlgebra
 
 coulumb(r::Float64) = -1 / r + l*(l + 1) / r^2
 quadratic(x::Float64) = (x - origin)^2
-
-function normalize(u::Vector)
-    ψ = zeros(res)
-    if radial
-        for i = 1:res
-            ψ[i] = u[i] / (i*dr)
-        end
-    else
-        ψ = u
-    end
-    λ = sqrt(sum(abs.(ψ).^2))
-    ψ / λ
-end
 
 f(x, E) = 2(E - V(x))
 
@@ -31,7 +18,8 @@ function shoot(E::Float64)
         q₁ = q₂
         u[i] = (q₂ / (1 + dr2/12 * f(i*dr, E)))
     end
-    normalize(u) * 10
+    normalize!(u)
+    10u
 end
 
 function bisect(lbnd::Float64, ubnd::Float64, n)
@@ -84,7 +72,7 @@ const res = 1500
 const dr = R / res
 const dr2 = dr^2
 
-const tol = 1.0e-10
+const tol = 1.0e-8
 const max = 200
 
 const V = quadratic
@@ -94,7 +82,6 @@ const N = 50
 
 const E₀ = -1.0
 const dE = 0.1
-
 
 function main()
     E₁ = E₀
