@@ -1,10 +1,14 @@
 # Quantum Mechanics Simulations
 A collection of scripts to find simulated position space eigen vectors, or wavefunctions, of the discretized time independent and dependent Sch&ouml;dinger Equation, [*ISE*, *DSE*]: 
 
+The time Indpendent (Implicit) Schr&ouml;dinger Equation
 ```
-ISE: H*psi(x) = E*psi(x) 
+ISE: H|psi(x)> = E|psi(x)> 
+```
 
-DSE: psi(x, t) = exp(im*H*t)*psi(x)
+The time Dependent (Deterministic) Schr&ouml;dinger Equation
+```
+DSE: |psi(x, t)> = exp(im*H*t)|psi(x)>
 ```
 
 ## Shoot
