@@ -1,4 +1,4 @@
-# Quantum Mechanics Simulations
+# Quantum Mechanical Simulations
 A collection of scripts to find simulated position space eigen vectors, or wavefunctions, of the discretized time independent and dependent Sch&ouml;dinger Equation. 
 
 The time Indpendent (Implicit) Schr&ouml;dinger Equation: *ISE*
