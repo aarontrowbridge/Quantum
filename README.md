@@ -27,5 +27,3 @@ The script `eigen.jl` looks at the eigen vectors corresponding to the Coulumb Po
 
 ## Evolve
 
-## Paths
-
