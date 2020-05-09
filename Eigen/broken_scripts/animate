@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+data=$1
+
+if [ -f $data ]; then
+    p=anim &
+    while true; do
+        read -r input
+        if [ $input = "W" ]; then
+            echo "Q\n" > $p
+            exit 1
+        fi
+        cat $input > $p
+    done
+else
+    echo "file not found"
+    exit 1
+fi
+
+
