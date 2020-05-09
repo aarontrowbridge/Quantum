@@ -43,11 +43,31 @@ I need to figure out how to include `LaTeX` here.
 ## Eigen
 This method "simply" sets up the matrix eigen value problem associated with solving the *ISE* on a 3-D lattice, where each dimension has a resolution of *res* intervals, resulting in a cube in space with *res*^3 lattice points.
 
-This can be flattened into a vector of length *res*^3, with a corresponding Hamiltonian operator, *H* = 0.5*L*^2 + *V*, where *L*^2 is the 3-D Laplacian operator and *hbar* = *m* = 1. Then we can use a package implementing the Arnoldi method to find the eigenvectors an eigenvalues of *H*.
+This can be flattened into a vector of length *res*^3, with a corresponding Hamiltonian operator, *H* = 0.5*L* + *V*, where *L* is the 3-D Laplacian operator and *hbar* = *m* = 1. Then we can use a package implementing the Arnoldi method to find the eigenvectors and eigenvalues of *H*.
 
-The script `eigen.jl` looks at the eigen vectors corresponding to the Coulumb Potential, *V* ~ 1/*r*.  A script to animate these discretized orbital wavefunctions is `anim.sh`, which can be ran in a terminal as `./anim.sh <res> <N>`, where *N* indicates we will recieve wavefunctions 1 to *N*. If you have anim installed that is.
+The script `eigen.jl` looks at the eigen vectors corresponding to the Coulumb potential, *V* ~ 1/*r*.  A script to animate these discretized orbital wavefunctions is `anim.sh`, which can be ran in a terminal as `./anim.sh <res> <N>`, where *N* indicates we will recieve wavefunctions 1 to *N*. If you have anim installed that is.
 
+Here is the short version of what that looks like:
 
+```julia
+Δ = laplacian()
+V = potential()
+
+H = -0.5Δ + V
+
+decomp = partialschur(H,
+                      nev=N,
+                      tol=1e-4,
+                      which=SR())[1]
+
+E, Ψ = partialeigen(decomp)
+
+```
+
+where the kernel of *V* is:
+```julia
+coulumb(x, y, z) = -1 / (4π * hypot(x, y, z))
+```
 
 ## Evolve
 
