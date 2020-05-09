@@ -16,7 +16,7 @@ function shoot(E::Float64)
         q₂ = 2q₁ - q₀ - dr2 * f((i+1)*dr, E) * u[i+1]
         q₀ = q₁
         q₁ = q₂
-        u[i] = (q₂ / (1 + dr2/12 * f(i*dr, E)))
+        u[i] = q₂ / (1 + dr2/12 * f(i*dr, E))
     end
     normalize!(u)
     10u
@@ -66,12 +66,6 @@ function printer(ψ::Vector, n, E)
     end
 end
 
-const R = 15
-const origin = R/2
-const res = 1500
-const dr = R / res
-const dr2 = dr^2
-
 const tol = 1.0e-8
 const max = 200
 
@@ -82,6 +76,13 @@ const N = 50
 
 const E₀ = -1.0
 const dE = 0.1
+
+const res = 1500
+const R = 15
+
+const origin = R/2
+const dr = R / res
+const dr2 = dr^2
 
 function main()
     E₁ = E₀
