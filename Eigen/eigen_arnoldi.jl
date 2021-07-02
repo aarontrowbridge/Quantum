@@ -73,8 +73,12 @@ end
 
 anim(E::Float64, j::Int) = ψ -> anim(ψ, E, j)
 
+
+# lattice resolution
 const res = parse(Int, ARGS[1])
+
 const dim = res^3
+
 const origin = (res - 1) / 2
 
 const N = parse(Int, ARGS[2])
@@ -96,7 +100,7 @@ function main()
 
     decomp = partialschur(H,
                           nev=N,
-                          tol=1e-4,
+                          tol=1e-6,
                           which=SR())[1]
 
     println("got shur decomp...\n")
