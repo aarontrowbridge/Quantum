@@ -1,8 +1,8 @@
 # shooting method
 using Printf, LinearAlgebra
 
-coulumb(r::Float64) = -1 / r + l*(l + 1) / r^2
-quadratic(x::Float64) = (x - origin)^2
+coulumb(r::Float64; l = 1) = -1 / r + l*(l + 1) / r^2
+quadratic(x::Float64) = (x - origin)^2 + 0.1(x - origin)^3
 
 f(x, E) = 2(E - V(x))
 
@@ -66,18 +66,18 @@ function printer(ψ::Vector, n, E)
     end
 end
 
-const tol = 1.0e-8
+const tol = 1e-8
 const max = 200
 
-const V = quadratic
-const radial = false
+const V = coulumb
+const radial = true
 
 const N = 50
 
 const E₀ = -1.0
 const dE = 0.1
 
-const res = 1500
+const res = 200
 const R = 15
 
 const origin = R/2

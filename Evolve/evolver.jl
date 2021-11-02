@@ -71,7 +71,7 @@ sinpkt(x) = sin(π * x / λ) * exp(-im * p^2 * π * x / λ)
 exppkt(x) = A * exp(-((x - λ/2)/σ)^2) / (σ * sqrt(2π))
 
 
-const res  = 2^8::Int64
+const res  = 2^9::Int64
 const len  = 20.::Float64
 const mid  = div(res, 2)
 const dx   = len / res
@@ -92,6 +92,7 @@ const imtm = false
 function main()
     V(x) = 20x^2
     # V(x) = begin x <= (mid + 2)
+    opr = oprinit(V)
     wfn::Vector{Complex{Float64}} = zeros(res)
     spawn!(wfn)
     while true
